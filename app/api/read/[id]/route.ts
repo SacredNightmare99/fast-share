@@ -1,18 +1,19 @@
+import { NextRequest } from "next/server";
 import { findShare, deleteShare } from "@/lib/models/share.repo";
 
 export async function GET(
-  _: Request,
-  { params }: { params: { id: string } }
+  _: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const resolvedParams = await params;
-  const share = await findShare(resolvedParams.id);
+  const { id } = await params;
+  const share = await findShare(id);
 
   if (!share) {
     return Response.json({ error: "Not found or expired" }, { status: 404 });
   }
 
   if (share.oneTime) {
-    await deleteShare(resolvedParams.id);
+    await deleteShare(id);
   }
 
   return Response.json({ text: share.text });
