@@ -1,3 +1,26 @@
+/* Custom toggle styles */
+.toggle-bg {
+  @apply transition-colors duration-200 rounded-full;
+  box-shadow: 0 0 0 2px #b91c1c;
+}
+.toggle-bg-off {
+  @apply bg-zinc-700;
+  box-shadow: 0 0 0 2px #27272a;
+}
+.toggle-bg-on {
+  @apply bg-red-600;
+  box-shadow: 0 0 0 2px #b91c1c;
+}
+.toggle-thumb {
+  @apply absolute left-1 top-1 w-4 h-4 rounded-full transition-transform duration-200;
+  box-shadow: 0 1px 4px #0003;
+}
+.toggle-thumb-on {
+  @apply translate-x-6 bg-zinc-100;
+}
+.toggle-thumb-off {
+  @apply bg-zinc-100;
+}
 @import "tailwindcss";
 
 :root {

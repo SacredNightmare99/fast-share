@@ -1,23 +1,26 @@
-import clientPromise from "@/lib/mongodb";
 import { nanoid } from "nanoid";
+import { createShare } from "@/lib/models/share.repo";
+import { Share } from "@/lib/models/share.model";
 
 export async function POST(req: Request) {
-  const { text } = await req.json();
+  const { text, oneTime = true, expiryMinutes = 10 } = await req.json();
 
   if (!text) {
     return Response.json({ error: "Empty text" }, { status: 400 });
   }
 
-  const id = nanoid(6).toUpperCase();
-  const db = (await clientPromise).db("fasttext");
-  await db.collection("shares").insertOne({
-    id,
+  const now = new Date();
+  const share: Share = {
+    _id: nanoid(6).toUpperCase(),
     text,
-    createdAt: new Date(),
-  });
+    oneTime,
+    createdAt: now,
+    expiresAt: new Date(now.getTime() + expiryMinutes * 60 * 1000),
+  };
+
+  await createShare(share);
 
   return Response.json({
-    id,
-    link: `${process.env.NEXT_PUBLIC_BASE_URL}/s/${id}`,
+    link: `${process.env.NEXT_PUBLIC_BASE_URL}/s/${share._id}`,
   });
 }

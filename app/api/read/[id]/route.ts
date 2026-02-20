@@ -1,19 +1,19 @@
-import clientPromise from "@/lib/mongodb";
+import { findShare, deleteShare } from "@/lib/models/share.repo";
 
 export async function GET(
   _: Request,
-  { params }: { params: Promise<{ id: string }> | { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const db = (await clientPromise).db("fasttext");
   const resolvedParams = await params;
-  const doc = await db.collection("shares").findOne({ id: resolvedParams.id });
+  const share = await findShare(resolvedParams.id);
 
-  if (!doc) {
+  if (!share) {
     return Response.json({ error: "Not found or expired" }, { status: 404 });
   }
 
-  // delete after reading
-  await db.collection("shares").deleteOne({ id: resolvedParams.id });
+  if (share.oneTime) {
+    await deleteShare(resolvedParams.id);
+  }
 
-  return Response.json({ text: doc.text });
+  return Response.json({ text: share.text });
 }

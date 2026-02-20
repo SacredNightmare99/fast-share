@@ -28,7 +28,7 @@ export default function ReadPage({
         readOnly
         value={text}
         className="w-full h-48 bg-zinc-900 border border-zinc-800 rounded-md p-3 resize-none"
-        placeholder="Text has expired or is invalid."
+        placeholder="Loading...."
       />
 
       <button
