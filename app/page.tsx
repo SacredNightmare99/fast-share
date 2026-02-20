@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 const EXPIRY_OPTIONS = [
   { label: "5 minutes", value: 5 },
@@ -83,22 +84,42 @@ export default function Home() {
         </button>
         {link && (
           <div className="mt-6 w-full flex flex-col items-center">
-            <div className="bg-zinc-900 border-2 border-red-600 rounded-xl shadow-lg px-6 py-4 flex flex-col items-center w-full">
-              <span className="text-lg font-semibold text-red-600 mb-2">Your Share Link</span>
+            <div className="bg-zinc-900 border-2 border-red-600 rounded-xl shadow-lg px-6 py-5 flex flex-col items-center w-full space-y-4">
+              <span className="text-lg font-semibold text-red-600">
+                Your Share Link
+              </span>
+
               <a
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-100 font-mono text-base break-all underline hover:text-red-600 transition-colors mb-3 w-full text-center"
+                className="text-zinc-100 font-mono text-base break-all underline hover:text-red-600 transition-colors w-full text-center"
               >
                 {link}
               </a>
+
               <button
                 onClick={() => navigator.clipboard.writeText(link)}
-                className="bg-red-600 text-zinc-100 px-4 py-2 rounded-md font-medium hover:bg-red-700 transition-colors duration-150 shadow"
+                className="bg-red-600 text-zinc-100 px-4 py-2 rounded-md font-medium hover:bg-red-700 transition-colors shadow"
               >
                 Copy Link
               </button>
+
+              {/* QR CODE */}
+              <div className="mt-2 flex flex-col items-center">
+                <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800">
+                  <QRCodeSVG
+                    value={link}
+                    size={180}
+                    bgColor="#09090b"
+                    fgColor="#fafafa"
+                    level="M"
+                  />
+                </div>
+                <span className="mt-2 text-xs text-zinc-500">
+                  Scan on your other device
+                </span>
+              </div>
             </div>
           </div>
         )}
