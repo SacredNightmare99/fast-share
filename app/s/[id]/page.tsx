@@ -21,19 +21,19 @@ export default function ReadPage({
   }, [params]);
 
   return (
-    <main className="max-w-xl mx-auto px-4 py-10">
-      <h1 className="text-xl font-semibold mb-4">Shared Text</h1>
+    <main className="max-w-xl mx-auto px-4 py-10 bg-zinc-950 rounded-lg shadow-lg">
+      <h1 className="text-xl font-semibold text-zinc-100 mb-4 tracking-tight">Shared Text</h1>
 
       <textarea
         readOnly
         value={text}
-        className="w-full h-48 bg-zinc-900 border border-zinc-800 rounded-md p-3 resize-none"
-        placeholder="Loading...."
+        className="w-full h-48 bg-zinc-900 text-zinc-100 border border-zinc-800 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-red-600 placeholder:text-zinc-500"
+        placeholder="Loading..."
       />
 
       <button
         onClick={() => navigator.clipboard.writeText(text)}
-        className="mt-4 px-4 py-2 bg-zinc-100 text-zinc-900 rounded-md font-medium hover:bg-zinc-200"
+        className="mt-4 w-full bg-red-600 text-zinc-100 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors duration-150 shadow-md"
       >
         Copy
       </button>

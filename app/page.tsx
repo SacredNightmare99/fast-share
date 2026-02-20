@@ -81,13 +81,25 @@ export default function Home() {
         >
           Share
         </button>
-
         {link && (
-          <div className="mt-4 text-sm text-zinc-400 break-all">
-            Link:{" "}
-            <a href={link} target="_blank" className="underline text-red-600 hover:text-red-700">
-              {link}
-            </a>
+          <div className="mt-6 w-full flex flex-col items-center">
+            <div className="bg-zinc-900 border-2 border-red-600 rounded-xl shadow-lg px-6 py-4 flex flex-col items-center w-full">
+              <span className="text-lg font-semibold text-red-600 mb-2">Your Share Link</span>
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-100 font-mono text-base break-all underline hover:text-red-600 transition-colors mb-3 w-full text-center"
+              >
+                {link}
+              </a>
+              <button
+                onClick={() => navigator.clipboard.writeText(link)}
+                className="bg-red-600 text-zinc-100 px-4 py-2 rounded-md font-medium hover:bg-red-700 transition-colors duration-150 shadow"
+              >
+                Copy Link
+              </button>
+            </div>
           </div>
         )}
       </div>
