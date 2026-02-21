@@ -176,12 +176,14 @@ export default function Home() {
           <button 
             onClick={() => setMode('send')}
             className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === 'send' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500'}`}
+            title="Send mode"
           >
             Send
           </button>
           <button 
             onClick={() => setMode('receive')}
             className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === 'receive' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500'}`}
+            title="Receive mode"
           >
             Receive
           </button>
@@ -226,7 +228,7 @@ export default function Home() {
             />
 
             <div className="mt-4">
-              <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} disabled={peerStatus !== 'idle'} />
+              <input placeholder="file" type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} disabled={peerStatus !== 'idle'} />
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
@@ -234,6 +236,7 @@ export default function Home() {
                 className={`w-full py-2 px-4 border-2 border-dashed rounded-lg transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed ${
                   isLiveDrop ? "border-amber-600/50 text-amber-200 bg-amber-900/10" : "border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-600"
                 }`}
+                title="Attach a file"
               >
                 {file ? `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)` : "Click to attach a file (optional)"}
               </button>
@@ -246,6 +249,7 @@ export default function Home() {
                   type="button"
                   onClick={() => setOneTime((v) => !v)}
                   className={`relative w-12 h-6 rounded-full transition-colors ${oneTime ? 'bg-red-600' : 'bg-zinc-800'}`}
+                  title="Toggle one-time view"
                 >
                   <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${oneTime ? 'left-7' : 'left-1'}`} />
                 </button>
@@ -253,6 +257,7 @@ export default function Home() {
 
               {!oneTime && (
                 <select
+                  title="expiry"
                   value={expiry}
                   onChange={(e) => setExpiry(Number(e.target.value))}
                   className="bg-zinc-900 border border-zinc-800 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-red-600 text-zinc-100"

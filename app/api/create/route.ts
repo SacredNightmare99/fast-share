@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     
     const text = formData.get("text") as string;
     const file = formData.get("file") as File | null;
-    const peerId = formData.get("peerId") as string; // NEW: Get Peer ID
+    const peerId = formData.get("peerId") as string;
     const shareType = (formData.get("shareType") as 'cloud' | 'p2p') || 'cloud';
     const oneTime = formData.get("oneTime") === "true";
     const expiryMinutes = parseInt(formData.get("expiryMinutes") as string) || 10;

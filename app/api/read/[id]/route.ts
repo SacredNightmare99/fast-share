@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { findShare, deleteShare } from "@/lib/models/share.repo";
+import { deleteBlobByUrl } from "@/lib/models/blob.util";
 
 export async function GET(
   _: Request,
@@ -13,8 +14,20 @@ export async function GET(
     return Response.json({ error: "Not found or expired" }, { status: 404 });
   }
 
+
+  // If one-time, delete both DB and blob immediately
   if (share.oneTime) {
+    if (share.fileUrl) {
+      await deleteBlobByUrl(share.fileUrl);
+    }
     await deleteShare(id);
+  } else {
+    // If not one-time, check if expired and delete blob if so
+    const now = new Date();
+    if (share.fileUrl && share.expiresAt && new Date(share.expiresAt) < now) {
+      await deleteBlobByUrl(share.fileUrl);
+      await deleteShare(id);
+    }
   }
 
   return Response.json({ 
