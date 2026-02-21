@@ -2,10 +2,11 @@ import { NextRequest } from "next/server";
 import { findShare, deleteShare } from "@/lib/models/share.repo";
 
 export async function GET(
-  _: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  _: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await context.params;
+
   const share = await findShare(id);
 
   if (!share) {
@@ -16,5 +17,10 @@ export async function GET(
     await deleteShare(id);
   }
 
-  return Response.json({ text: share.text });
+  return Response.json({ 
+  text: share.text,
+  fileUrl: share.fileUrl,   // Send the file link
+  fileName: share.fileName, // Send the filename
+  fileSize: share.fileSize  // Send the size
+});
 }
